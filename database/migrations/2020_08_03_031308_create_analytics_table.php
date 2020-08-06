@@ -15,7 +15,12 @@ class CreateAnalyticsTable extends Migration
     {
         Schema::create('analytics', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('content_id');
+            $table->string('view')->default('0');
+            $table->string('share')->default('0');
             $table->timestamps();
+
+            $table->foreign('content_id')->references('id')->on('contents')->onDelete('cascade');
         });
     }
 
