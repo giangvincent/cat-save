@@ -15,7 +15,7 @@ base
         <span>MENU</span>
       </div>
       <div class="logo">LO-cmn-GO</div>
-      <div class="upload">
+      <router-link class="upload" to="/editor">
         <svg class="svg-icon" viewBox="0 0 20 20">
           <path
             fill="none"
@@ -30,7 +30,7 @@ base
           />
         </svg>
         <span>UPLOAD</span>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

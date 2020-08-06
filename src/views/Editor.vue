@@ -1,9 +1,80 @@
 <template>
-  <div></div>
+  <div class="flex justify-center">
+    <router-link
+      to="/"
+      class="fixed top-0 left-0 m-3 z-10 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+    >Back</router-link>
+
+    <div class="my-0 sm:mt-4 mx-auto bg-gray-700 relative">
+      <div class="absolute z-10 text-white top-0 right-0">
+        <div
+          class="p-2 m-2 hover:bg-white hover:text-gray-800 border-2 border-white rounded inline-block select-none"
+          @click="addText()"
+        >Text</div>
+        <div
+          class="p-2 m-2 hover:bg-white hover:text-gray-800 border-2 border-white rounded inline-block select-none"
+          @click="finishAndUpload()"
+        >Done</div>
+      </div>
+      <canvas id="mainCanvas" width="600" height="900"></canvas>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "editor"
+  name: "editor",
+  data() {
+    return {
+      canvas: null,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight
+    };
+  },
+  mounted() {
+    this.canvas = new fabric.Canvas("mainCanvas");
+    var self = this;
+    fabric.Image.fromURL(
+      "https://images.unsplash.com/photo-1508527951275-84b4bfe1be1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=512&q=80",
+      function(oImg) {
+        oImg
+          .set({
+            left: 0,
+            top: 0,
+            width: 600,
+            height: 900,
+            selectable: false,
+            isbackground: true,
+            evented: false,
+            crossOrigin: "anonymous"
+          })
+          .scale(1);
+        self.canvas.add(oImg);
+      }
+    );
+    // create a rectangle with angle=45
+  },
+  methods: {
+    addText() {
+      var textProp = {
+        fontSize: 40,
+        left: 300,
+        top: 50,
+        fontFamily: "helvetica",
+        angle: 0,
+        fill: "#FFFFFF",
+        scaleX: 1,
+        scaleY: 1,
+        fontWeight: "",
+        originX: "left",
+        width: 300,
+        hasRotatingPoint: true,
+        centerTransform: true,
+        textAlign: "center"
+      };
+      var textbox = new fabric.Textbox("text", textProp);
+      this.canvas.add(textbox);
+    }
+  }
 };
 </script>
