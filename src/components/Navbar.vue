@@ -1,6 +1,6 @@
 base
 <template>
-  <div class="header card-1">
+  <div class="header">
     <div class="inside-header">
       <div class="hambergur" onclick="openNav()">
         <svg class="svg-icon" viewBox="0 0 20 20">
@@ -12,10 +12,10 @@ base
 								c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"
           />
         </svg>
-        <span>MENU</span>
+        <span>Menu</span>
       </div>
-      <div class="logo">LO-cmn-GO</div>
-      <router-link class="upload" to="/editor">
+      <div class="logo">PUSSYSav</div>
+      <div class="upload">
         <svg class="svg-icon" viewBox="0 0 20 20">
           <path
             fill="none"
@@ -29,14 +29,19 @@ base
 								c0,0.052-0.024,0.097-0.038,0.146h2.954c0.322,0,0.583,0.261,0.583,0.583V17.039z"
           />
         </svg>
-        <span>UPLOAD</span>
-      </router-link>
+        <span>Upload</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  name: "navbar"
+  name: "navbar",
+  methods: {
+    ...mapActions([])
+  }
 };
 </script>

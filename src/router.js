@@ -31,6 +31,16 @@ export default new Router({
       path: "/editor",
       name: "editor",
       component: () => import("./views/Editor.vue")
+    },
+    {
+      path: "/user",
+      name: "user",
+      component: () => import("./views/User.vue")
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("./views/Login.vue")
     }
   ]
 });
