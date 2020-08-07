@@ -16,7 +16,7 @@
           @click="finishAndUpload()"
         >Done</div>
       </div>
-      <canvas id="mainCanvas" width="600" height="900"></canvas>
+      <canvas id="mainCanvas" :width="canvasSize[0]" :height="canvasSize[1]"></canvas>
     </div>
   </div>
 </template>
@@ -36,7 +36,14 @@ export default {
   computed: {
     ...mapState({
       previewImage: state => state.editor.previewImage
-    })
+    }),
+    canvasSize: function() {
+      var canvasSizeArr = [600, 900];
+      if (this.windowWidth < 600) {
+        canvasSizeArr = [this.windowWidth, this.windowHeight];
+      }
+      return canvasSizeArr;
+    }
   },
   mounted() {
     this.canvas = new fabric.Canvas("mainCanvas");
@@ -68,7 +75,7 @@ export default {
     addText() {
       var textProp = {
         fontSize: 40,
-        left: 300,
+        left: this.windowWidth / 2 - 100,
         top: 50,
         fontFamily: "helvetica",
         angle: 0,
@@ -77,7 +84,9 @@ export default {
         scaleY: 1,
         fontWeight: "bold",
         originX: "left",
-        width: 300,
+        lineHeight: 2,
+        width: 200,
+        height: 100,
         hasRotatingPoint: true,
         centerTransform: true,
         textAlign: "center"
