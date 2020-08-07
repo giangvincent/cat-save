@@ -22,6 +22,7 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
 import { mapState, mapActions } from "vuex";
 export default {
   name: "editor",
@@ -39,11 +40,12 @@ export default {
   },
   mounted() {
     this.canvas = new fabric.Canvas("mainCanvas");
-    if (self.windowWidth < 600) {
+    if (this.windowWidth < 600) {
       this.canvas.width = this.windowWidth;
       this.canvas.height = this.windowHeight;
     }
     var self = this;
+
     fabric.Image.fromURL(this.previewImage, function(oImg) {
       oImg
         .set({
