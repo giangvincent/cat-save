@@ -2,7 +2,7 @@ base
 <template>
   <div class="header">
     <div class="inside-header">
-      <div class="hambergur" onclick="openNav()">
+      <div class="hambergur" @click="TOGGLE_SIDEBAR()">
         <svg class="svg-icon" viewBox="0 0 20 20">
           <path
             fill="none"
@@ -15,7 +15,7 @@ base
         <span>Menu</span>
       </div>
       <div class="logo">PUSSYSav</div>
-      <div class="upload">
+      <div class="upload" @click="triggerPreviewImage">
         <svg class="svg-icon" viewBox="0 0 20 20">
           <path
             fill="none"
@@ -31,17 +31,41 @@ base
         </svg>
         <span>Upload</span>
       </div>
+      <input
+        ref="previewImage"
+        type="file"
+        @change="previewImage"
+        accept="image/*"
+        style="display: none"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "navbar",
   methods: {
-    ...mapActions([])
+    ...mapMutations(["TOGGLE_SIDEBAR", "updatePreviewImage"]),
+    ...mapActions([]),
+    triggerPreviewImage() {
+      this.$refs.previewImage.click();
+    },
+    previewImage(event) {
+      var self = this;
+      if (event.target.files && event.target.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          self.updatePreviewImage(e.target.result);
+          self.$router.push("/editor");
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    }
   }
 };
 </script>

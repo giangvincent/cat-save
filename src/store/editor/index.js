@@ -2,7 +2,9 @@ import mutations from "./mutations";
 import actions from "./actions";
 
 export default {
-    state: {},
+    state: {
+        previewImage: null
+    },
     mutations: mutations,
     actions: actions
 };

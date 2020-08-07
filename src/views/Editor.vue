@@ -6,13 +6,13 @@
     >Back</router-link>
 
     <div class="my-0 sm:mt-4 mx-auto bg-gray-700 relative">
-      <div class="absolute z-10 text-white top-0 right-0">
+      <div class="absolute z-10 text-blue-700 font-semibold top-0 right-0">
         <div
-          class="p-2 m-2 hover:bg-white hover:text-gray-800 border-2 border-white rounded inline-block select-none"
+          class="p-2 m-2 hover:bg-blue-500 shadow-xl hover:text-white border-2 border border-blue-500 hover:border-transparent rounded inline-block select-none"
           @click="addText()"
         >Text</div>
         <div
-          class="p-2 m-2 hover:bg-white hover:text-gray-800 border-2 border-white rounded inline-block select-none"
+          class="p-2 m-2 hover:bg-blue-500 shadow-xl hover:text-white border-2 border border-blue-500 hover:border-transparent rounded inline-block select-none"
           @click="finishAndUpload()"
         >Done</div>
       </div>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   name: "editor",
   data() {
@@ -31,30 +32,37 @@ export default {
       windowHeight: window.innerHeight
     };
   },
+  computed: {
+    ...mapState({
+      previewImage: state => state.editor.previewImage
+    })
+  },
   mounted() {
     this.canvas = new fabric.Canvas("mainCanvas");
+    if (self.windowWidth < 600) {
+      this.canvas.width = this.windowWidth;
+      this.canvas.height = this.windowHeight;
+    }
     var self = this;
-    fabric.Image.fromURL(
-      "https://images.unsplash.com/photo-1508527951275-84b4bfe1be1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=512&q=80",
-      function(oImg) {
-        oImg
-          .set({
-            left: 0,
-            top: 0,
-            width: 600,
-            height: 900,
-            selectable: false,
-            isbackground: true,
-            evented: false,
-            crossOrigin: "anonymous"
-          })
-          .scale(1);
-        self.canvas.add(oImg);
-      }
-    );
+    fabric.Image.fromURL(this.previewImage, function(oImg) {
+      oImg
+        .set({
+          left: 0,
+          top: 0,
+          width: self.windowWidth < 600 ? self.windowWidth : 600,
+          height: self.windowWidth < 600 ? self.windowHeight : 900,
+          selectable: false,
+          isbackground: true,
+          evented: false,
+          crossOrigin: "anonymous"
+        })
+        .scale(1);
+      self.canvas.add(oImg);
+    });
     // create a rectangle with angle=45
   },
   methods: {
+    ...mapActions(["createContent"]),
     addText() {
       var textProp = {
         fontSize: 40,
@@ -62,10 +70,10 @@ export default {
         top: 50,
         fontFamily: "helvetica",
         angle: 0,
-        fill: "#FFFFFF",
+        fill: "#000000",
         scaleX: 1,
         scaleY: 1,
-        fontWeight: "",
+        fontWeight: "bold",
         originX: "left",
         width: 300,
         hasRotatingPoint: true,
@@ -74,7 +82,8 @@ export default {
       };
       var textbox = new fabric.Textbox("text", textProp);
       this.canvas.add(textbox);
-    }
+    },
+    finishAndUpload() {}
   }
 };
 </script>
