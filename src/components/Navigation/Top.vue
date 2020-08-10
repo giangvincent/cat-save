@@ -2,7 +2,7 @@ base
 <template>
   <div class="header">
     <div class="inside-header">
-      <div class="hambergur" @click="TOGGLE_SIDEBAR()">
+      <div class="hambergur text-left" @click="TOGGLE_SIDEBAR()">
         <svg class="svg-icon" viewBox="0 0 20 20">
           <path
             fill="none"
@@ -15,7 +15,7 @@ base
         <span>Menu</span>
       </div>
       <div class="logo">PUSSYSav</div>
-      <div class="upload" @click="triggerPreviewImage">
+      <div class="upload text-right" @click="gotoEditor">
         <svg class="svg-icon" viewBox="0 0 20 20">
           <path
             fill="none"
@@ -31,13 +31,6 @@ base
         </svg>
         <span>Upload</span>
       </div>
-      <input
-        ref="previewImage"
-        type="file"
-        @change="previewImage"
-        accept="image/*"
-        style="display: none"
-      />
     </div>
   </div>
 </template>
@@ -50,6 +43,9 @@ export default {
   methods: {
     ...mapMutations(["TOGGLE_SIDEBAR", "updatePreviewImage"]),
     ...mapActions([]),
+    gotoEditor() {
+      this.$router.push("/editor");
+    },
     triggerPreviewImage() {
       this.$refs.previewImage.click();
     },

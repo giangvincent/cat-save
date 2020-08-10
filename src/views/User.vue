@@ -1,12 +1,12 @@
 <template>
-  <div class="row">
-    <div class="col-12 col-s-12">
+  <div>
+    <div class="row" style="background-color: #fafafa;">
       <div class="col-4 col-12-s none768"></div>
       <div class="col-4 col-12-s profile-top">
         <div class="avatar">
           <img src="img/2.jpg" />
         </div>
-        <p class="huge-title">Đãng Linh Dzô</p>
+        <p class="huge-title strong">Đãng Linh Dzô</p>
         <p class="huge-title">
           <a href="#" class>@giangdam</a>
         </p>
@@ -14,10 +14,10 @@
       <div class="col-4 col-12-s none768"></div>
     </div>
 
-    <div class="col-3 col-s-12 none768"></div>
-    <div class="col-6 col-s-12 padnone768">
-      <div class="col-12 col-s-12 padnone768">
-        <div class="tablink-f">
+    <div class="row">
+      <div class="col-2 col-s-12 none768"></div>
+      <div class="col-8 col-s-12 padnone768">
+        <div class="tablink-f pad-1em">
           <button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">
             <svg class="svg-icon" viewBox="0 0 20 20">
               <path
@@ -45,172 +45,127 @@
             <span>Thông tin</span>
           </button>
         </div>
+        <!-- User navbar -->
 
-        <div id="Home" class="tabcontent">
-          <!-- Photo Grid -->
-          <div class="cont-profile">
-            <div class="column">
-              <img src="img/1.jpg" style="width:100%" />
-              <img src="img/3.jpg" style="width:100%" />
-              <img src="img/4.jpg" style="width:100%" />
-            </div>
-            <div class="column">
-              <img src="img/3.jpg" style="width:100%" />
-              <img src="img/4.jpg" style="width:100%" />
-              <img src="img/1.jpg" style="width:100%" />
-            </div>
-            <div class="column">
-              <img src="img/4.jpg" style="width:100%" />
-              <img src="img/1.jpg" style="width:100%" />
-              <img src="img/3.jpg" style="width:100%" />
-            </div>
-          </div>
-        </div>
-
-        <div id="News" class="tabcontent">
-          <p>Giao diện phần đăng giống phần lưu</p>
-        </div>
+        <user-saved></user-saved>
+        <user-created></user-created>
 
         <div id="Contact" class="tabcontent">
-          <h2>Giới thiệu về bản thân/ kênh này</h2>
+          <div class="col-12 col-s-12">
+            <h2 class="mid-title pad-1em text-center">Quản lý thông tin trên kênh của bạn</h2>
 
-          <div class="cont-input">
-            <form action="/action_page.php">
-              <div class="row">
-                <div class="div-25">
-                  <label for="fname">Nickname</label>
+            <div class="cont-input">
+              <form action="/action_page.php">
+                <div class="row">
+                  <div class="div-25">
+                    <label for="fname">Nickname</label>
+                  </div>
+                  <div class="div-75">
+                    <input
+                      type="text"
+                      id="fname"
+                      name="firstname"
+                      placeholder="Điền tên hoặc Nickname"
+                    />
+                  </div>
                 </div>
-                <div class="div-75">
-                  <input
-                    type="text"
-                    id="fname"
-                    name="firstname"
-                    placeholder="Điền tên hoặc Nickname"
-                  />
+                <div class="row">
+                  <div class="div-25">
+                    <label for="lname">Địa chỉ email</label>
+                  </div>
+                  <div class="div-75">
+                    <input type="text" id="lname" name="lastname" placeholder="Địa chỉ email" />
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="div-25">
-                  <label for="lname">Địa chỉ email</label>
+                <div class="row">
+                  <div class="div-25">
+                    <label for="country">Giới tính</label>
+                  </div>
+                  <div class="div-75">
+                    <select id="country" name="country">
+                      <option value="australia">Nam</option>
+                      <option value="canada">Nữ</option>
+                      <option value="usa">Khác</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="div-75">
-                  <input type="text" id="lname" name="lastname" placeholder="Địa chỉ email" />
+                <div class="row">
+                  <div class="div-25">
+                    <label for="subject">Giới thiệu bản thân</label>
+                  </div>
+                  <div class="div-75">
+                    <textarea
+                      id="subject"
+                      name="subject"
+                      placeholder="Giới thiệu về bản thân hoặc kênh"
+                      style="height: 169px;"
+                    ></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="div-25">
-                  <label for="country">Giới tính</label>
+                <div class="row" style="text-align: right;">
+                  <input type="submit" value="Thay đổi thông tin" class="btn-huge" />
                 </div>
-                <div class="div-75">
-                  <select id="country" name="country">
-                    <option value="australia">Nam</option>
-                    <option value="canada">Nữ</option>
-                    <option value="usa">Khác</option>
-                  </select>
+              </form>
+            </div>
+
+            <div class="cont-input">
+              <form action="/action_page.php">
+                <div class="row">
+                  <div class="div-25">
+                    <label for="fname">Mật khẩu hiện tại</label>
+                  </div>
+                  <div class="div-75">
+                    <input
+                      type="password"
+                      id="fname"
+                      name="firstname"
+                      placeholder="Mật khẩu hiện tại"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="div-25">
-                  <label for="subject">Giới thiệu bản thân</label>
+                <div class="row">
+                  <div class="div-25">
+                    <label for="lname">Mật khẩu mới</label>
+                  </div>
+                  <div class="div-75">
+                    <input type="password" id="lname" name="lastname" placeholder="Mật khẩu mới" />
+                  </div>
                 </div>
-                <div class="div-75">
-                  <textarea
-                    id="subject"
-                    name="subject"
-                    placeholder="Giới thiệu về bản thân hoặc kênh"
-                    style="height:169px"
-                  ></textarea>
+
+                <div class="row" style="text-align: right;">
+                  <input type="submit" value="Đổi mật khẩu" class="btn-huge" />
                 </div>
-              </div>
-              <div class="row" style="text-align: right;">
-                <input type="submit" value="Thay đổi thông tin" class="btn-huge" />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-3 col-s-12 none768"></div>
+      <div class="col-2 col-s-12 none768"></div>
+    </div>
+    <div class="back">
+      <back-to-home></back-to-home>
+    </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable vue/no-unused-components */
+import BackToHome from "@/components/Navigation/BackToHome.vue";
+import SlideReactTool from "@/components/Editor/SlideReactTool.vue";
+import ContentBtns from "@/components/Content/ContentBtns.vue";
+import UserCreated from "@/components/Content/UserCreated.vue";
+import UserSaved from "@/components/Content/UserSaved.vue";
 export default {
-  name: "User"
+  name: "User",
+  components: {
+    BackToHome,
+    SlideReactTool,
+    ContentBtns,
+    UserCreated,
+    UserSaved
+  }
 };
 </script>
 
-<style>
-.cont-profile {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-}
-
-/* Create four equal columns that sits next to each other */
-.column {
-  -ms-flex: 33.33%; /* IE10 */
-  flex: 33.33%;
-  max-width: 33.33%;
-  padding: 0 4px;
-}
-
-.column img {
-  margin-top: 8px;
-  vertical-align: middle;
-  width: 100%;
-}
-
-/* Responsive layout - makes a two column-layout instead of four columns */
-@media screen and (max-width: 800px) {
-  .column {
-    -ms-flex: 50%;
-    flex: 50%;
-    max-width: 50%;
-  }
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column {
-    -ms-flex: 100%;
-    flex: 100%;
-    max-width: 100%;
-  }
-}
-
-/* Style tab links */
-.tablink {
-  text-align: center;
-  flex: 1;
-  padding: 1em;
-  border-radius: 5px;
-}
-.tablink > .svg-icon {
-  font-size: 1.5em;
-  margin-right: 0.25em;
-}
-.tablink span {
-  display: inline-block;
-}
-
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  display: none;
-  padding: 1em 0;
-  height: 100%;
-}
-.tablink-f {
-  display: flex;
-  padding: 0 4px;
-}
-
-.profile-top {
-  text-align: center;
-}
-.profile-top > .avatar {
-  margin: 0 auto;
-}
-</style>
+<style></style>

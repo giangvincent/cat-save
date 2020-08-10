@@ -1,0 +1,73 @@
+@media only screen and (max-width: 768px) {
+
+    .post,
+    .post-img,
+    .tablink span {
+        width: 100%;
+    }
+
+    .post {
+        height: 100vh;
+        padding-top: 3em;
+        background-color: #000;
+    }
+
+    .post-img {
+        margin: auto;
+        padding: 0;
+
+    }
+
+    .post-under {
+        position: absolute;
+        bottom: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .post-tit {
+
+        font-size: 1em;
+        padding: .5em;
+        z-index: 99;
+    }
+
+    .post-content {
+        position: absolute;
+        top: 0;
+        height: 100vh;
+        padding-top: 3em;
+        width: 100%;
+    }
+
+    .post-img {
+        display: flex;
+        height: 100%;
+    }
+
+    .post-img img {
+        margin: auto;
+    }
+
+    .post-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-color: #fff;
+        width: 100%;
+        padding: 0;
+    }
+
+    .post-tool {
+        position: absolute;
+        top: 4em;
+        border-radius: 32px;
+        overflow: hidden;
+        font-size: 1em;
+    }
+
+    .post-img>.slide-tool {
+        bottom: 4em;
+    }
+
+}

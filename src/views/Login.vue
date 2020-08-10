@@ -3,6 +3,13 @@
     <div class="col-3 col-s-12 none768"></div>
     <div class="col-6 col-s-12 padnone768">
       <div class="col-12 col-s-12 padnone768">
+        <div class="pad-1em-0 flex">
+          <div class="flex-1">
+            <back-to-home></back-to-home>
+          </div>
+          <div class="flex-2">logo</div>
+          <div class="flex-1"></div>
+        </div>
         <div class="tablink-f">
           <button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">
             <svg class="svg-icon" viewBox="0 0 20 20">
@@ -154,81 +161,11 @@
 </template>
 
 <script>
+import BackToHome from "@/components/Navigation/BackToHome.vue";
 export default {
-  name: "Login"
+  name: "Login",
+  components: {
+    BackToHome
+  }
 };
 </script>
-
-<style>
-.cont-profile {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-}
-
-/* Create four equal columns that sits next to each other */
-.column {
-  -ms-flex: 33.33%; /* IE10 */
-  flex: 33.33%;
-  max-width: 33.33%;
-  padding: 0 4px;
-}
-
-.column img {
-  margin-top: 8px;
-  vertical-align: middle;
-  width: 100%;
-}
-
-/* Responsive layout - makes a two column-layout instead of four columns */
-@media screen and (max-width: 800px) {
-  .column {
-    -ms-flex: 50%;
-    flex: 50%;
-    max-width: 50%;
-  }
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column {
-    -ms-flex: 100%;
-    flex: 100%;
-    max-width: 100%;
-  }
-}
-
-/* Style tab links */
-.tablink {
-  text-align: center;
-  flex: 1;
-  padding: 1em;
-  border-radius: 5px;
-}
-.tablink > .svg-icon {
-  font-size: 1.5em;
-  margin-right: 0.25em;
-}
-.tablink span {
-  display: inline-block;
-}
-
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  display: none;
-  padding: 1em 0;
-  height: 100%;
-}
-.tablink-f {
-  display: flex;
-  padding: 0 4px;
-}
-
-.profile-top {
-  text-align: center;
-}
-.profile-top > .avatar {
-  margin: 0 auto;
-}
-</style>
