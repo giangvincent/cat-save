@@ -45,22 +45,6 @@ export default {
     ...mapActions([]),
     gotoEditor() {
       this.$router.push("/editor");
-    },
-    triggerPreviewImage() {
-      this.$refs.previewImage.click();
-    },
-    previewImage(event) {
-      var self = this;
-      if (event.target.files && event.target.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-          self.updatePreviewImage(e.target.result);
-          self.$router.push("/editor");
-        };
-
-        reader.readAsDataURL(event.target.files[0]);
-      }
     }
   }
 };

@@ -8,13 +8,14 @@
             <div class="post-img col-7 col-s-12">
               <div ref="containerCreateTool">
                 <img src="@/assets/images/default.jpg" v-if="!startCreate" />
+                <canvas
+                  id="createCanvas"
+                  :width="canvasSize[0]"
+                  :height="canvasSize[1]"
+                  v-show="startCreate"
+                ></canvas>
               </div>
-              <canvas
-                id="createCanvas"
-                :width="canvasSize[0]"
-                :height="canvasSize[1]"
-                style="position: absolute;"
-              ></canvas>
+
               <canvas id="finalCanvas" width="675" height="900" style="display: none"></canvas>
 
               <div class="img-editor">
@@ -140,9 +141,9 @@
 
       <div class="col-2 col-s-12 none768"></div>
     </div>
-    <!-- <div class="back">
+    <div class="back">
       <back-to-home></back-to-home>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -151,43 +152,6 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 import BackToHome from "@/components/Navigation/BackToHome.vue";
 import SlideReactTool from "@/components/Editor/SlideReactTool.vue";
-var canvas;
-function setAttr(name, value, ob) {
-  ob.toObject = (function(toObject) {
-    return function() {
-      return fabric.util.object.extend(toObject.call(this), {
-        [name]: value
-      });
-    };
-  })(ob.toObject);
-}
-
-function setActiveStyle(styleName, value, object) {
-  object = object || canvas.getActiveObject();
-  console.log(object);
-  if (!object) return;
-
-  if (object.setSelectionStyles && object.isEditing) {
-    var style = {};
-    style[styleName] = value;
-    object.setSelectionStyles(style);
-    object.setCoords();
-  } else {
-    object.set(styleName, value);
-  }
-
-  object.setCoords();
-  canvas.requestRenderAll();
-}
-
-function setActiveProp(name, value) {
-  var object = canvas.getActiveObject();
-  console.log(object);
-  if (!object) return;
-  object.set(name, value).setCoords();
-  canvas.renderAll();
-}
-
 export default {
   name: "editor",
   components: {
@@ -201,13 +165,13 @@ export default {
       tags: [],
       showTextTool: false,
       colorList: [
-        "#ff0000",
-        "#ffa500",
-        "#008000",
-        "#00ffff",
-        "#800080",
-        "#dcdcdc",
-        "#000000"
+        "red",
+        "orange",
+        "green",
+        "cyan",
+        "purple",
+        "gainsboro",
+        "black"
       ],
       canvas: null,
       canvasSize: [675, 900],
@@ -229,48 +193,38 @@ export default {
     ...mapMutations(["TOGGLE_SIDEBAR", "updatePreviewImage"]),
     ...mapActions(["createContent"]),
     initCanvas() {
-      canvas = new fabric.Canvas("createCanvas");
-      canvas.selectionColor = "rgba(0,255,0,0.2)";
-      canvas.selectionBorderColor = "red";
-      canvas.selectionLineWidth = 1;
-      fabric.Object.prototype.objectCaching = false;
-      canvas.setDimensions({
-        width: this.canvasSize[0],
-        height: this.canvasSize[1]
-      });
-      /* this.canvas.setWidth = this.$refs.containerCreateTool.clientWidth;
-      this.canvas.setHeight = this.$refs.containerCreateTool.clientHeight; */
+      this.canvas = new fabric.Canvas("createCanvas");
+      this.canvas.width = this.$refs.containerCreateTool.clientWidth;
+      this.canvas.height = this.$refs.containerCreateTool.clientHeight;
       var self = this;
-
+      var ratio =
+        this.$refs.containerCreateTool.clientWidth /
+        this.$refs.containerCreateTool.clientHeight;
       fabric.Image.fromURL(this.previewImage, function(oImg) {
         oImg.set({
           left: 0,
           top: 0,
-          width: oImg.width,
-          height: oImg.height,
+          width: oImg.width * ratio,
+          height: oImg.height * ratio,
           selectable: false,
+          isbackground: true,
           evented: false,
           crossOrigin: "anonymous"
         });
-
         if (oImg.width >= self.canvasSize[0] && oImg.width >= oImg.height) {
           oImg.scaleToWidth(self.canvasSize[0]);
         }
         if (oImg.height >= self.canvasSize[1] && oImg.height >= oImg.width) {
           oImg.scaleToHeight(self.canvasSize[1]);
         }
-        canvas.add(oImg);
+        self.canvas.add(oImg);
       });
-
       // create a rectangle with angle=45
     },
-    changeTextColor(color) {
-      setActiveProp("fill", color);
-    },
-    createText() {
+    addText() {
       var textProp = {
         fontSize: 40,
-        left: 50,
+        left: this.canvasSize / 2 - 100,
         top: 50,
         fontFamily: "helvetica",
         angle: 0,
@@ -279,26 +233,16 @@ export default {
         scaleY: 1,
         fontWeight: "bold",
         originX: "left",
-        padding: 20,
+        lineHeight: 2,
         width: 200,
         height: 100,
         hasRotatingPoint: true,
         centerTransform: true,
-        textAlign: "center",
-        width: 100
+        textAlign: "center"
       };
       var textbox = new fabric.Textbox("text", textProp);
-      canvas.add(textbox);
-      canvas.setActiveObject(textbox);
-      this.showTextTool = true;
+      this.canvas.add(textbox);
     },
-    doneEditText() {
-      self.startCreate = false;
-    },
-    cancelEditText() {
-      self.startCreate = false;
-    },
-
     triggerPreviewImage() {
       this.$refs.previewImage.click();
     },
