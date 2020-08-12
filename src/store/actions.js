@@ -1,3 +1,1 @@
-export default {
-    createContent(context, payload) { }
-};
+export default {};

@@ -2,23 +2,38 @@
   <div class="flex justify-center">
     <div class="row" style="background-color: #000; width: 100%;">
       <div class="col-2 col-s-12 none768"></div>
-      <div class="col-8 col-s-12 padnone768" style="background-color: #fff; height: 100vh;">
+      <div
+        class="col-8 col-s-12 padnone768"
+        style="background-color: #fff; height: 100vh;"
+      >
         <div class="row">
           <div class="re">
-            <div class="post-img col-7 col-s-12">
-              <div ref="containerCreateTool">
+            <div class="post-img col-7 col-s-12" style="overflow: hidden">
+              <div ref="defaultImage">
                 <img src="@/assets/images/default.jpg" v-if="!startCreate" />
               </div>
+              <div id="createToolContainer" @click="clickCanvasHandle()">
+                <canvas
+                  id="createCanvas"
+                  :width="canvasSize[0]"
+                  :height="canvasSize[1]"
+                  style="position: absolute;"
+                ></canvas>
+              </div>
+
               <canvas
-                id="createCanvas"
-                :width="canvasSize[0]"
-                :height="canvasSize[1]"
-                style="position: absolute;"
+                id="finalCanvas"
+                width="675"
+                height="900"
+                style="display: none"
               ></canvas>
-              <canvas id="finalCanvas" width="675" height="900" style="display: none"></canvas>
 
               <div class="img-editor">
-                <button v-show="showTextTool" class="btn-basic btn-100" @click="doneEditText()">
+                <button
+                  v-show="showTextTool"
+                  class="btn-basic btn-100"
+                  @click="doneEditText()"
+                >
                   <svg class="svg-icon" viewBox="0 0 20 20">
                     <path
                       fill="none"
@@ -39,7 +54,11 @@
                   ></li>
                 </ul>
 
-                <button v-show="showTextTool" class="btn-basic btn-100" @click="cancelEditText()">
+                <button
+                  v-show="showTextTool"
+                  class="btn-basic btn-100"
+                  @click="cancelEditText()"
+                >
                   <svg class="svg-icon" viewBox="0 0 20 20">
                     <path
                       fill="none"
@@ -49,7 +68,11 @@
                 </button>
                 <!-- Cancel text tool -->
 
-                <button v-show="startCreate" class="btn-basic btn-100" @click="createText()">
+                <button
+                  v-show="startCreate"
+                  class="btn-basic btn-100"
+                  @click="createText()"
+                >
                   <svg class="svg-icon" viewBox="0 0 20 20">
                     <path
                       fill="none"
@@ -64,7 +87,10 @@
                   </svg>
                 </button>
                 <!-- Add text + Show text tool -->
-                <button class="btn-basic btn-100" @click="triggerPreviewImage()">
+                <button
+                  class="btn-basic btn-100"
+                  @click="triggerPreviewImage()"
+                >
                   <svg class="svg-icon" viewBox="0 0 20 20">
                     <path
                       fill="none"
@@ -89,7 +115,11 @@
                   @change="handlePreviewImage"
                 />
 
-                <button v-show="startCreate" class="btn-basic btn-100" @click="deleteCurObject()">
+                <button
+                  v-show="startCreate"
+                  class="btn-basic btn-100"
+                  @click="deleteCurObject()"
+                >
                   <svg class="svg-icon" viewBox="0 0 20 20">
                     <path
                       fill="none"
@@ -113,26 +143,37 @@
               <div class="post-textarea">
                 <textarea
                   placeholder="Nhập tiêu đề trong 240 ký tự"
-                  v-on:model="limitTitle"
+                  v-model="postTitle"
                   maxlength="240"
                 ></textarea>
               </div>
 
               <div class="hashtag-cont pad-1em-0">
                 <span class="strong">Hashtag :</span>
-                <a v-for="tag in tags" :key="tag">{{ tag }}</a>
+                <a v-for="tag in tags" :key="tag">#{{ tag }}</a>
               </div>
               <div class="flex hashtag-form">
                 <div class="_left">
-                  <input type="text" id="fname" name="firstname" placeholder="Nhập hashtag" />
+                  <input
+                    type="text"
+                    name="firstname"
+                    placeholder="Nhập hashtag"
+                    v-model="curTag"
+                    v-on:keyup.enter="createHashtag()"
+                    maxlength="50"
+                  />
                 </div>
                 <div class="_right">
-                  <button class="btn-basic btn-100">Nhập</button>
+                  <button class="btn-basic btn-100" @click="createHashtag()">
+                    Nhập
+                  </button>
                 </div>
               </div>
             </div>
             <div class="col-5 col-s-12">
-              <button class="btn-huge btn-100">Đăng bài viết</button>
+              <button class="btn-huge btn-100" @click="finishAndUpload">
+                Đăng bài viết
+              </button>
             </div>
           </div>
         </div>
@@ -140,13 +181,15 @@
 
       <div class="col-2 col-s-12 none768"></div>
     </div>
-    <!-- <div class="back">
+    <div class="back">
       <back-to-home></back-to-home>
-    </div>-->
+    </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { mapState, mapMutations, mapActions } from "vuex";
 import BackToHome from "@/components/Navigation/BackToHome.vue";
@@ -199,6 +242,7 @@ export default {
       startCreate: false,
       postTitle: "",
       tags: [],
+      curTag: "",
       showTextTool: false,
       colorList: [
         "#ff0000",
@@ -211,6 +255,9 @@ export default {
       ],
       canvas: null,
       canvasSize: [675, 900],
+      canvasResultsJson: [],
+      imagesDataUrl: [],
+      activeObject: null,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       characterLimit: 240
@@ -222,6 +269,16 @@ export default {
     }),
     limitTitle: function() {
       return this.postTitle.substring(0, this.characterLimit);
+    }
+  },
+  watch: {
+    activeObject: function(newVal, oldVal) {
+      console.log(newVal);
+      if (newVal !== oldVal && newVal !== null && newVal.type === "textbox") {
+        this.showTextTool = true;
+      } else {
+        this.showTextTool = false;
+      }
     }
   },
   mounted() {},
@@ -238,8 +295,8 @@ export default {
         width: this.canvasSize[0],
         height: this.canvasSize[1]
       });
-      /* this.canvas.setWidth = this.$refs.containerCreateTool.clientWidth;
-      this.canvas.setHeight = this.$refs.containerCreateTool.clientHeight; */
+      /* this.canvas.setWidth = this.$refs.defaultImage.clientWidth;
+      this.canvas.setHeight = this.$refs.defaultImage.clientHeight; */
       var self = this;
 
       fabric.Image.fromURL(this.previewImage, function(oImg) {
@@ -280,38 +337,52 @@ export default {
         fontWeight: "bold",
         originX: "left",
         padding: 20,
-        width: 200,
+        width: 100,
         height: 100,
         hasRotatingPoint: true,
         centerTransform: true,
-        textAlign: "center",
-        width: 100
+        textAlign: "center"
       };
       var textbox = new fabric.Textbox("text", textProp);
       canvas.add(textbox);
       canvas.setActiveObject(textbox);
+      this.activeObject = canvas.getActiveObject();
       this.showTextTool = true;
     },
     doneEditText() {
-      self.startCreate = false;
+      this.activeObject = null;
+      canvas.discardActiveObject();
+      this.showTextTool = false;
+      canvas.renderAll();
     },
     cancelEditText() {
-      self.startCreate = false;
+      var activeObjects = canvas.getActiveObjects();
+      canvas.discardActiveObject();
+      if (activeObjects.length) {
+        canvas.remove.apply(canvas, activeObjects);
+      }
+      this.activeObject = null;
+      this.showTextTool = false;
+      canvas.renderAll();
     },
-
+    clickCanvasHandle() {
+      console.log("clickCanvasHandle");
+      this.activeObject = canvas.getActiveObject();
+    },
     triggerPreviewImage() {
       this.$refs.previewImage.click();
     },
     handlePreviewImage(event) {
       var self = this;
+      console.log(event.target.files);
       if (event.target.files && event.target.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
           self.updatePreviewImage(e.target.result);
           self.$set(self, "canvasSize", [
-            self.$refs.containerCreateTool.clientWidth,
-            self.$refs.containerCreateTool.clientHeight
+            self.$refs.defaultImage.clientWidth,
+            self.$refs.defaultImage.clientHeight
           ]);
           self.startCreate = true;
           self.initCanvas();
@@ -320,7 +391,37 @@ export default {
         reader.readAsDataURL(event.target.files[0]);
       }
     },
-    finishAndUpload() {}
+    createHashtag() {
+      if (this.curTag !== "") {
+        this.curTag = this.curTag.replace(/\s+/g, " ");
+        this.curTag = this.curTag
+          .toLowerCase()
+          .split(" ")
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join("");
+        this.curTag =
+          this.curTag.charAt(0).toLowerCase() + this.curTag.slice(1);
+        this.tags.push(this.curTag);
+        this.curTag = "";
+      }
+    },
+    finishAndUpload() {
+      try {
+        var images = canvas.toDataURL({
+          format: "jpeg"
+        });
+        if (this.limitTitle !== "" && this.tags.length > 0) {
+          var data = {
+            images: [images],
+            title: this.limitTitle,
+            tags: this.tags
+          };
+          this.createContent(data);
+        }
+      } catch ($e) {
+        // console.log($e);
+      }
+    }
   }
 };
 </script>
