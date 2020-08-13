@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.5",
         "laravel/framework": "^7.22.2",
+        "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",
         "spatie/laravel-image-optimizer": "^1.6"
     },
