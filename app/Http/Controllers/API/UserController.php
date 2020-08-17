@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -52,9 +53,10 @@ class UserController extends Controller
         }
 
         $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+        $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
         $user->sendEmailVerificationNotification();
+        Auth::login($user);
         $afterRegister['token'] = $user->createToken($user->name)->accessToken;
 
         return response()->json(['success' => $afterRegister], $this->successStatus);

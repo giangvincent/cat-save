@@ -18,12 +18,12 @@ Route::get('/', function () {
 });
 
 
-Auth::routes(['verify' => true]);
+/* Auth::routes(['verify' => true]);
 Route::get('v1', function () {
     // Only verified users may enter...
     dump('user verified');
 })->middleware('verified');
 
-Auth::routes();
+Auth::routes(); */
 
 Route::get('/home', 'HomeController@index')->name('home');
