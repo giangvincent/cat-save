@@ -17,4 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('create-new-content', 'ApiController@createNewContent');
+
+Auth::routes(['verify' => true]);
+Route::get('v1', function () {
+    // Only verified users may enter...
+    dump('user verified');
+})->middleware('verified');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
