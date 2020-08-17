@@ -8,6 +8,7 @@
       <feed></feed>
       <nav-right></nav-right>
     </div>
+    <goto-top></goto-top>
   </div>
 </template>
 
@@ -16,6 +17,7 @@
 import NavTop from "@/components/Navigation/Top.vue";
 import NavLeft from "@/components/Navigation/Left.vue";
 import NavRight from "@/components/Navigation/Right.vue";
+import GotoTop from "@/components/Navigation/GotoTop";
 import Feed from "@/components/Content/HomeFeed.vue";
 import "@/assets/main.css";
 import "@/assets/feed.css";
@@ -27,6 +29,7 @@ export default {
     NavTop,
     NavLeft,
     NavRight,
+    GotoTop,
     Feed
   },
   computed: {

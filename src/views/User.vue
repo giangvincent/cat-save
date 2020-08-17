@@ -1,17 +1,35 @@
 <template>
   <div>
     <div class="row" style="background-color: #fafafa;">
-      <div class="col-4 col-12-s none768"></div>
-      <div class="col-4 col-12-s profile-top">
-        <div class="avatar">
-          <img src="img/2.jpg" />
+      <div class="col-3 col-12-s none768"></div>
+      <div class="col-6 col-12-s">
+        <back-to-home></back-to-home>
+
+        <div class="profile-top">
+          <div class="avatar">
+            <img src="img/2.jpg" />
+            <button class="btn-basic change-avatar">
+              <svg
+                class="svg-icon"
+                enable-background="new 0 0 217.855 217.855"
+                version="1.1"
+                viewBox="0 0 217.86 217.86"
+                xml:space="preserve"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m215.66 53.55-51.353-51.354c-1.406-1.406-3.314-2.196-5.303-2.196s-3.897 0.79-5.303 2.196l-149.89 149.89c-1.35 1.352-2.135 3.166-2.193 5.075l-1.611 52.966c-0.063 2.067 0.731 4.069 2.193 5.532 1.409 1.408 3.317 2.196 5.303 2.196 0.076 0 0.152-1e-3 0.229-4e-3l52.964-1.613c1.909-0.058 3.724-0.842 5.075-2.192l149.89-149.89c2.928-2.929 2.928-7.678-1e-3 -10.607zm-158.39 147.79-42.024 1.28 1.279-42.026 91.124-91.125 40.75 40.743-91.129 91.128zm101.74-101.73-40.751-40.742 40.752-40.753 40.746 40.747-40.747 40.748z"
+                />
+              </svg>
+            </button>
+          </div>
+          <p class="huge-title strong">Đãng Linh Dzô</p>
+          <p class="huge-title">
+            <a href="#" class>@giangdam</a>
+          </p>
         </div>
-        <p class="huge-title strong">Đãng Linh Dzô</p>
-        <p class="huge-title">
-          <a href="#" class>@giangdam</a>
-        </p>
       </div>
-      <div class="col-4 col-12-s none768"></div>
+      <div class="col-3 col-12-s none768"></div>
     </div>
 
     <div class="row">
@@ -58,15 +76,18 @@
               <form action="/action_page.php">
                 <div class="row">
                   <div class="div-25">
-                    <label for="fname">Nickname</label>
+                    <label for="fname">Tên gọi</label>
                   </div>
                   <div class="div-75">
-                    <input
-                      type="text"
-                      id="fname"
-                      name="firstname"
-                      placeholder="Điền tên hoặc Nickname"
-                    />
+                    <input type="text" id="fname" name="firstname" placeholder="Đặt tên" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="div-25">
+                    <label for="fname">@Nickname</label>
+                  </div>
+                  <div class="div-75">
+                    <input type="text" id="fname" name="firstname" placeholder="@Nickname" />
                   </div>
                 </div>
                 <div class="row">
@@ -142,9 +163,6 @@
       </div>
 
       <div class="col-2 col-s-12 none768"></div>
-    </div>
-    <div class="back">
-      <back-to-home></back-to-home>
     </div>
   </div>
 </template>

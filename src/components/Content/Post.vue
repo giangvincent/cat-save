@@ -28,6 +28,16 @@
           <a>#fuck anyone</a>
           <a>#fuck anything</a>
         </div>
+        <div class="post-data flex pad-1em-0">
+          <div class="flex-1">
+            <span class="post-data-num">696</span>
+            <span>lượt yêu thích</span>
+          </div>
+          <div class="flex-1">
+            <span class="post-data-num">125</span>
+            <span>lượt lưu trữ</span>
+          </div>
+        </div>
       </div>
 
       <div class="col-6 col-s-12 post-btn">

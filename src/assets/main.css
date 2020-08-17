@@ -349,6 +349,9 @@ button:focus {
     outline: none;
 }
 
+button span {
+    white-space: nowrap;
+}
 
 
 
@@ -373,15 +376,15 @@ button:focus {
     display: flex;
 }
 
-.col-f-1 {
+.flex-1 {
     flex: 1;
 }
 
-.col-f-2 {
+.flex-2 {
     flex: 2;
 }
 
-.col-f-5 {
+.flex-5 {
     flex: 5;
 }
 
@@ -392,6 +395,16 @@ button:focus {
 }
 
 
+
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fafafa;
+    padding: .5em .5em;
+    z-index: 999;
+}
 
 
 
@@ -602,7 +615,7 @@ button:focus {
 
 .btn-basic {
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
     background-color: #fff;
@@ -626,9 +639,10 @@ button:focus {
 
 .btn-huge {
     font-size: 1em;
+    font-weight: 800;
     padding: 1em;
     text-transform: uppercase;
-    transition: 0.5s;
+    transition: 0.2s;
     background-size: 200% auto;
     color: #FFF;
     border-radius: 5px;
@@ -680,10 +694,28 @@ button:focus {
     font-size: 1.5em;
     float: left;
     margin-right: .5em;
+    position: relative;
 }
 
 .avatar img {
     max-height: 100%;
+}
+
+
+
+
+.change-avatar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    font-size: .5em;
+    border: 0;
+    background-color: rgba(255, 255, 255, .8);
+}
+
+.avatar:hover>.change-avatar {
+    display: block;
 }
 
 .aside {
@@ -691,6 +723,7 @@ button:focus {
     padding: 1em;
     color: #fff;
     font-size: 14px;
+    border-radius: 5px;
 }
 
 .div-right {
@@ -746,6 +779,10 @@ label {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+}
+
+.cont-input .sm-title {
+    margin: 1em 0;
 }
 
 .div-25 {
@@ -817,6 +854,20 @@ label {
     margin: 0;
 }
 
+.post-data {
+    border-bottom: 1px solid #eee;
+    color: #999;
+}
+
+.post-data span {
+    font-size: .8em;
+    font-weight: bold;
+}
+
+.post-data-num {
+    margin-right: .5em;
+}
+
 /* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
     display: none;
@@ -825,6 +876,8 @@ label {
 
 .tablink-f {
     display: flex;
+    width: 100%;
+    overflow: hidden;
 }
 
 .react-tool {
@@ -848,6 +901,7 @@ label {
 
 .profile-top {
     text-align: center;
+    margin-top: 3em;
 }
 
 .profile-top>.avatar {
@@ -875,8 +929,10 @@ label {
 /* PROFILE */
 .go-to-profile {
     position: fixed;
-    bottom: 1em;
-    left: 1em;
+    bottom: 0em;
+    left: 0em;
+    background-color: #fff;
+    padding: 1em;
 }
 
 .g2p-cont ._left {
@@ -892,6 +948,13 @@ label {
     flex: 2;
 }
 
+.go-to-top {
+    position: fixed;
+    bottom: 0em;
+    right: 0em;
+
+    padding: 1em;
+}
 
 
 
@@ -944,12 +1007,16 @@ label {
 /* BACK BUTTON */
 .back {
     position: fixed;
-    top: 2em;
-    left: 2em;
+    top: 1em;
+    left: 1em;
     z-index: 999;
 }
 
 .back span {
+    margin-left: .5em;
+}
+
+.back-home span {
     margin-left: .5em;
 }
 
@@ -1023,7 +1090,7 @@ label {
 
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
 
     /* For desktop: */
     .col-1 {
@@ -1103,7 +1170,8 @@ label {
         z-index: 99;
     }
 
-    .closeMenu {
+    .closeMenu,
+    .block768 {
         display: block;
     }
 
@@ -1114,6 +1182,11 @@ label {
     .login-mobile {
         display: block;
     }
+
+    .back-home span {
+        display: none;
+    }
+
 
 
 

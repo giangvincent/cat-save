@@ -45,7 +45,7 @@
               />
             </g>
           </svg>
-          Những kênh nổi bật
+          Top nổi bật
         </h2>
         <div class="huge-list">
           <div class="_left">

@@ -3,13 +3,8 @@
     <div class="col-3 col-s-12 none768"></div>
     <div class="col-6 col-s-12 padnone768">
       <div class="col-12 col-s-12 padnone768">
-        <div class="pad-1em-0 flex">
-          <div class="flex-1">
-            <back-to-home></back-to-home>
-          </div>
-          <div class="flex-2">logo</div>
-          <div class="flex-1"></div>
-        </div>
+        <back-to-home></back-to-home>
+
         <div class="tablink-f">
           <button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">
             <svg class="svg-icon" viewBox="0 0 20 20">
@@ -77,15 +72,18 @@
             <form action="/action_page.php">
               <div class="row">
                 <div class="div-25">
-                  <label for="fname">Nickname</label>
+                  <label for="fname">Tên gọi</label>
                 </div>
                 <div class="div-75">
-                  <input
-                    type="text"
-                    id="fname"
-                    name="firstname"
-                    placeholder="Điền tên hoặc Nickname"
-                  />
+                  <input type="text" id="fname" name="firstname" placeholder="Đặt tên" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="div-25">
+                  <label for="fname">@Nickname</label>
+                </div>
+                <div class="div-75">
+                  <input type="text" id="fname" name="firstname" placeholder="@Nickname" />
                 </div>
               </div>
               <div class="row">
