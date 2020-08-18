@@ -385,7 +385,8 @@ export default {
           var data = {
             images: [images],
             title: this.limitTitle,
-            tags: this.tags
+            tags: this.tags,
+            cat_id: 1
           };
           this.createContent(data);
         }
