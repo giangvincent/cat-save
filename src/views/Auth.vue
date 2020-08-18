@@ -5,8 +5,12 @@
       <div class="col-12 col-s-12 padnone768">
         <back-to-home></back-to-home>
 
-        <div class="tablink-f">
-          <button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">
+        <div class="tablink-f pad-1em-0">
+          <button
+            class="tablink"
+            @click="curTab = 'login'"
+            :style="{'background-color': (curTab == 'login') ? 'rgb(221, 221, 221)': 'transparent'}"
+          >
             <svg class="svg-icon" viewBox="0 0 20 20">
               <path
                 fill="none"
@@ -20,7 +24,11 @@
             <span>Đăng nhập</span>
           </button>
 
-          <button class="tablink" onclick="openPage('News', this)">
+          <button
+            class="tablink"
+            @click="curTab = 'register'"
+            :style="{'background-color': (curTab == 'register') ? 'rgb(221, 221, 221)': 'transparent'}"
+          >
             <svg class="svg-icon" viewBox="0 0 20 20">
               <path
                 d="M18.303,4.742l-1.454-1.455c-0.171-0.171-0.475-0.171-0.646,0l-3.061,3.064H2.019c-0.251,0-0.457,0.205-0.457,0.456v9.578c0,0.251,0.206,0.456,0.457,0.456h13.683c0.252,0,0.457-0.205,0.457-0.456V7.533l2.144-2.146C18.481,5.208,18.483,4.917,18.303,4.742 M15.258,15.929H2.476V7.263h9.754L9.695,9.792c-0.057,0.057-0.101,0.13-0.119,0.212L9.18,11.36h-3.98c-0.251,0-0.457,0.205-0.457,0.456c0,0.253,0.205,0.456,0.457,0.456h4.336c0.023,0,0.899,0.02,1.498-0.127c0.312-0.077,0.55-0.137,0.55-0.137c0.08-0.018,0.155-0.059,0.212-0.118l3.463-3.443V15.929z M11.241,11.156l-1.078,0.267l0.267-1.076l6.097-6.091l0.808,0.808L11.241,11.156z"
@@ -30,7 +38,11 @@
             <span>Đăng ký</span>
           </button>
 
-          <button class="tablink" onclick="openPage('Contact', this)">
+          <button
+            class="tablink"
+            @click="curTab = 'policy'"
+            :style="{'background-color': (curTab == 'policy') ? 'rgb(221, 221, 221)': 'transparent'}"
+          >
             <svg class="svg-icon" viewBox="0 0 20 20">
               <path
                 d="M15.396,2.292H4.604c-0.212,0-0.385,0.174-0.385,0.386v14.646c0,0.212,0.173,0.385,0.385,0.385h10.792c0.211,0,0.385-0.173,0.385-0.385V2.677C15.781,2.465,15.607,2.292,15.396,2.292 M15.01,16.938H4.99v-2.698h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.519,1.156-1.156s-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.321-1.089,0.771H4.99v-3.083h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.518,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V6.531h1.609C6.755,6.98,7.185,7.302,7.688,7.302c0.638,0,1.156-0.519,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V3.062h10.02V16.938z M7.302,13.854c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386s-0.173,0.385-0.385,0.385S7.302,14.066,7.302,13.854 M7.302,10c0-0.212,0.173-0.385,0.385-0.385S8.073,9.788,8.073,10s-0.173,0.385-0.385,0.385S7.302,10.212,7.302,10 M7.302,6.146c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386S7.899,6.531,7.688,6.531S7.302,6.358,7.302,6.146"
@@ -40,15 +52,22 @@
           </button>
         </div>
 
-        <div id="Home" class="tabcontent">
+        <div id="login" class="tabcontent" v-show="curTab == 'login'">
           <div class="cont-input">
-            <form action="/action_page.php">
+            <form @submit.prevent="login">
               <div class="row">
                 <div class="div-25">
                   <label for="fname">Địa chỉ email</label>
                 </div>
                 <div class="div-75">
-                  <input type="text" id="fname" name="firstname" placeholder="Địa chỉ email" />
+                  <input
+                    required
+                    type="text"
+                    id="fname"
+                    name="firstname"
+                    placeholder="Địa chỉ email"
+                    v-model="email"
+                  />
                 </div>
               </div>
               <div class="row">
@@ -56,26 +75,40 @@
                   <label for="lname">Mật khẩu</label>
                 </div>
                 <div class="div-75">
-                  <input type="password" id="lname" name="lastname" placeholder="Mật khẩu" />
+                  <input
+                    required
+                    type="password"
+                    id="lname"
+                    name="lastname"
+                    placeholder="Mật khẩu"
+                    v-model="password"
+                  />
                 </div>
               </div>
 
               <div class="row" style="text-align: right;">
-                <input type="submit" value="Thay đổi thông tin" class="btn-huge" />
+                <input type="submit" value="Đăng nhập" class="btn-huge" />
               </div>
             </form>
           </div>
         </div>
 
-        <div id="News" class="tabcontent">
+        <div id="register" class="tabcontent" v-show="curTab == 'register'">
           <div class="cont-input">
-            <form action="/action_page.php">
+            <form @submit.prevent="register">
               <div class="row">
                 <div class="div-25">
                   <label for="fname">Tên gọi</label>
                 </div>
                 <div class="div-75">
-                  <input type="text" id="fname" name="firstname" placeholder="Đặt tên" />
+                  <input
+                    required
+                    type="text"
+                    id="fname"
+                    name="firstname"
+                    placeholder="Đặt tên"
+                    v-model="name"
+                  />
                 </div>
               </div>
               <div class="row">
@@ -83,7 +116,13 @@
                   <label for="fname">@Nickname</label>
                 </div>
                 <div class="div-75">
-                  <input type="text" id="fname" name="firstname" placeholder="@Nickname" />
+                  <input
+                    type="text"
+                    id="fname"
+                    name="firstname"
+                    placeholder="@Nickname"
+                    v-model="nickname"
+                  />
                 </div>
               </div>
               <div class="row">
@@ -91,7 +130,14 @@
                   <label for="lname">Địa chỉ email</label>
                 </div>
                 <div class="div-75">
-                  <input type="text" id="lname" name="lastname" placeholder="Địa chỉ email" />
+                  <input
+                    required
+                    type="text"
+                    id="lname"
+                    name="lastname"
+                    placeholder="Địa chỉ email"
+                    v-model="email"
+                  />
                 </div>
               </div>
               <div class="row">
@@ -99,7 +145,14 @@
                   <label for="lname">Mật khẩu</label>
                 </div>
                 <div class="div-75">
-                  <input type="password" id="lname" name="lastname" placeholder="Nhập mật khẩu" />
+                  <input
+                    required
+                    type="password"
+                    id="lname"
+                    name="lastname"
+                    placeholder="Nhập mật khẩu"
+                    v-model="password"
+                  />
                 </div>
               </div>
               <div class="row">
@@ -107,18 +160,25 @@
                   <label for="lname">Nhập lại mật khẩu</label>
                 </div>
                 <div class="div-75">
-                  <input type="password" id="lname" name="lastname" placeholder="Nhập lại mật khẩu" />
+                  <input
+                    required
+                    type="password"
+                    id="lname"
+                    name="lastname"
+                    placeholder="Nhập lại mật khẩu"
+                    v-model="c_password"
+                  />
                 </div>
               </div>
 
               <div class="row" style="text-align: right;">
-                <button type="submit" class="btn-huge">Thay đổi thông tin</button>
+                <button type="submit" class="btn-huge">Đăng ký</button>
               </div>
             </form>
           </div>
         </div>
 
-        <div id="Contact" class="tabcontent">
+        <div id="policy" class="tabcontent" v-show="curTab == 'policy'">
           <div class="col-12 col-s-12">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -160,10 +220,48 @@
 
 <script>
 import BackToHome from "@/components/Navigation/BackToHome.vue";
+import { mapActions } from "vuex";
 export default {
   name: "Login",
   components: {
     BackToHome
+  },
+  data() {
+    return {
+      curTab: "login",
+      name: "",
+      nickname: "",
+      email: "",
+      password: "",
+      c_password: ""
+    };
+  },
+  methods: {
+    ...mapActions(["AUTH_REQUEST", "REGISTER_REQUEST"]),
+    login() {
+      if (this.email !== "" && this.password !== "") {
+        this.AUTH_REQUEST({
+          email: this.email,
+          password: this.password
+        });
+      }
+    },
+    register() {
+      if (
+        this.email !== "" &&
+        this.password !== "" &&
+        this.name !== "" &&
+        this.c_password !== ""
+      ) {
+        this.REGISTER_REQUEST({
+          name: this.name,
+          nickname: this.nickname,
+          email: this.email,
+          password: this.password,
+          c_password: this.c_password
+        });
+      }
+    }
   }
 };
 </script>
