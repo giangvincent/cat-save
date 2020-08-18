@@ -23,6 +23,6 @@ Route::get('email/verify/{id}', 'API\VerificationController@verify')->name('veri
 Route::get('email/resend', 'API\VerificationController@resend')->name('verification.resend');
 
 
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::post('details', 'API\UserController@details');
+Route::group(['prefix' => 'user/{id}', 'namespace' => 'API', 'middleware' => 'auth:api'], function () {
+    Route::post('detail', 'UserController@detail');
 });

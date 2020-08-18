@@ -29,6 +29,7 @@ class UserController extends Controller
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $afterLogin['token'] = $user->createToken($user->name)->accessToken;
+            $afterLogin['user'] = $user;
             return response()->json(['success' => $afterLogin], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -43,6 +44,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
+            'nickname' => "max:255",
             'email' => 'required|email|max:191',
             'password' => 'required|max:191',
             'c_password' => 'required|same:password'
@@ -58,7 +60,7 @@ class UserController extends Controller
         $user->sendEmailVerificationNotification();
         Auth::login($user);
         $afterRegister['token'] = $user->createToken($user->name)->accessToken;
-
+        $afterRegister['user'] = $user;
         return response()->json(['success' => $afterRegister], $this->successStatus);
     }
 
@@ -67,7 +69,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function details()
+    public function detail()
     {
         $user = Auth::user();
         return response()->json(['success' => $user], $this-> successStatus);
