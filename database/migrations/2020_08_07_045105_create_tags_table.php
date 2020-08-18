@@ -17,7 +17,7 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('status')->default('punlish');
+            $table->string('status')->default('publish');
             $table->timestamps();
         });
         Schema::create('content_tag', function (Blueprint $table) {

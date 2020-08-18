@@ -24,5 +24,10 @@ Route::get('email/resend', 'API\VerificationController@resend')->name('verificat
 
 
 Route::group(['prefix' => 'user/{id}', 'namespace' => 'API', 'middleware' => 'auth:api'], function () {
+    Route::post('create-content', 'ContentController@createContent');
+    Route::post('edit-content/{contentId}', 'ContentController@editContent');
+    Route::post('edit-content/{contentId}', 'ContentController@editContent');
     Route::post('detail', 'UserController@detail');
 });
+
+Route::get('get-contents', 'ContentController@getContents');
