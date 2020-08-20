@@ -7,7 +7,7 @@ export default {
             axios({ url: rootState.apiUrl + `/api/user/${state.user.id}/detail`, method: "POST" })
                 .then(resp => {
 
-                    commit("SET_USER_DETAIL", resp.data);
+                    commit("SET_USER_DETAIL", resp.data.success);
                     resolve(resp);
                 })
                 .catch(err => {
@@ -26,12 +26,12 @@ export default {
                     const user = resp.data.success.user;
                     localStorage.setItem("user-token", token); // store the token in localstorage
                     localStorage.setItem("user", user);
-                    axios.defaults.headers.common["Authorization"] = token;
+                    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
                     commit("AUTH_SUCCESS", token);
                     commit("SET_USER_DETAIL", user);
                     // you have your token, now log in your user :)
-                    dispatch("USER_REQUEST");
-                    resolve(resp);
+                    // dispatch("USER_REQUEST");
+                    resolve(resp.data);
                 })
                 .catch(err => {
                     commit("AUTH_ERROR", err);

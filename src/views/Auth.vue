@@ -239,10 +239,15 @@ export default {
   methods: {
     ...mapActions(["AUTH_REQUEST", "REGISTER_REQUEST"]),
     login() {
+      var self = this;
       if (this.email !== "" && this.password !== "") {
         this.AUTH_REQUEST({
           email: this.email,
           password: this.password
+        }).then(user => {
+          if (user.success) {
+            self.$router.push("/");
+          }
         });
       }
     },
@@ -259,6 +264,10 @@ export default {
           email: this.email,
           password: this.password,
           c_password: this.c_password
+        }).then(user => {
+          if (user.success) {
+            self.$router.push("/");
+          }
         });
       }
     }

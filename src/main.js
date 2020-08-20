@@ -16,6 +16,8 @@ if (token && user) {
 }
 Vue.config.productionTip = false;
 
+store.dispatch('loadDataApi', {});
+
 new Vue({
   router,
   store,
