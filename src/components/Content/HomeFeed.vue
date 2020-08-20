@@ -32,7 +32,9 @@ export default {
       alert(window.innerWidth);
       if (window.innerWidth < 768) {
         var mySwiper = new Swiper(".swiper-container", {
-          direction: "vertical"
+          direction: "vertical",
+          speed: 500,
+          shortSwipes: false
         });
       }
     });
