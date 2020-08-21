@@ -19,6 +19,11 @@ Vue.config.productionTip = false;
 Vue.use(Vue2TouchEvents)
 store.dispatch('loadDataApi', {});
 
+Vue.prototype.$isMobile = false
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768) {
+  Vue.prototype.$isMobile = true
+}
+
 new Vue({
   router,
   store,

@@ -8,7 +8,7 @@
       v-for="content in contents"
       :key="content.id"
       :content="content"
-      v-show="curPost === content.id"
+      v-show="curPost === content.id || !$isMobile"
       @onScroll="onScrollPost"
     ></post>
   </div>
@@ -51,10 +51,12 @@ export default {
       );
     }
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$isMobile);
+  },
   methods: {
     swipeHandler(direction) {
-      if (window.innerWidth < 768) {
+      if (this.$isMobile) {
         console.log(this.bottomTime, this.topTime, direction);
         if (this.bottomTime > 1 && direction == "top") {
           console.log("swipeHandler : next post");
