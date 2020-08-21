@@ -16,9 +16,9 @@
     "fabric": "^3.6.3",
     "postcss-cli": "^7.1.1",
     "register-service-worker": "^1.6.2",
-    "swiper": "^6.1.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue2-touch-events": "^2.3.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

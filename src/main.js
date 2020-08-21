@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store/";
 import axios from "axios";
+import Vue2TouchEvents from 'vue2-touch-events'
 
 import "./registerServiceWorker";
 
@@ -15,7 +16,7 @@ if (token && user) {
   store.dispatch('USER_REQUEST');
 }
 Vue.config.productionTip = false;
-
+Vue.use(Vue2TouchEvents)
 store.dispatch('loadDataApi', {});
 
 new Vue({

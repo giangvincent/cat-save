@@ -38,6 +38,7 @@
         height: 100vh;
         padding-top: 3em;
         width: 100%;
+        overflow-y: scroll;
     }
 
     .post-img {

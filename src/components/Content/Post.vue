@@ -1,8 +1,8 @@
 <template>
   <div class="post row">
-    <div class="post-content">
+    <div class="post-content" style="background: #fff" @scroll="onScroll">
       <div class="post-img col-6 col-s-12">
-        <img src="@/assets/images/default.jpg" />
+        <img :src="curImage" crossorigin="anonymous" />
 
         <div class="col-6 col-s-12 slide-tool">
           <slide-react-tool></slide-react-tool>
@@ -18,15 +18,11 @@
           <span class="strong">
             <router-link to="/user">@giangdam</router-link>
           </span>
-          In letter to Congress President Donald Trump calls TikTok a threat to
-          national security because the data the app collects. The letter says:
-          “This data collection threatens to allow the Chinese Communist Party
-          access to Americans' personal and proprietary information...”
-          <a>#tiktok</a>
-          <a>#hashtag</a>
-          <a>#new design</a>
-          <a>#fuck anyone</a>
-          <a>#fuck anything</a>
+          {{ curTitle }}
+          <a
+            v-for="tag in curTags"
+            :key="`${content.id}-hashtag-${tag}`"
+          >#{{tag}}</a>
         </div>
         <div class="post-data flex pad-1em-0">
           <div class="flex-1">
@@ -55,6 +51,7 @@
 import SlideReactTool from "@/components/Editor/SlideReactTool.vue";
 import ContentBtns from "@/components/Content/ContentBtns.vue";
 import ReactTool from "@/components/Content/ReactTool.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "post-detail",
@@ -62,6 +59,67 @@ export default {
     SlideReactTool,
     ContentBtns,
     ReactTool
+  },
+  props: {
+    content: Object
+  },
+  data() {
+    return {
+      defaultImage: "../../assets/images/default.jpg",
+      indexImage: 0,
+      bottomTime: 0,
+      topTime: 0
+    };
+  },
+  computed: {
+    ...mapState({
+      apiUrl: state => state.apiUrl
+    }),
+    curTags() {
+      if (typeof this.content.hashtags !== "undefined") {
+        var tags = JSON.parse(this.content.hashtags);
+        if (tags.length > 0) {
+          return tags;
+        }
+      }
+      return [];
+    },
+    curImage() {
+      if (typeof this.content.images !== "undefined") {
+        var images = JSON.parse(this.content.images);
+        if (images.length > 0) {
+          return this.apiUrl + "/" + images[this.indexImage];
+        }
+      }
+
+      return this.defaultImage;
+    },
+    curTitle() {
+      if (typeof this.content.title !== "undefined") {
+        return this.content.title;
+      }
+      return "";
+    }
+  },
+  watch: {
+    content: {
+      handler: function(val) {
+        console.log("new post ", val);
+        this.bottomTime = 0;
+        this.topTime = 0;
+      },
+      deep: true
+    }
+  },
+  methods: {
+    onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
+      if (scrollTop + clientHeight >= scrollHeight) {
+        this.$emit("onScroll", [this.bottomTime++, "bottom"]);
+      }
+      if (scrollTop <= 0) {
+        this.$emit("onScroll", [this.topTime++, "top"]);
+      }
+    }
   }
 };
 </script>
