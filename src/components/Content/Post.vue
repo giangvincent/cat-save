@@ -101,23 +101,22 @@ export default {
       return "";
     }
   },
-  watch: {
-    content: {
-      handler: function(val) {
-        console.log("new post ", val);
-        this.bottomTime = 0;
-        this.topTime = 0;
-      },
-      deep: true
-    }
-  },
+  watch: {},
   methods: {
     onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
       if (scrollTop + clientHeight >= scrollHeight) {
         this.$emit("onScroll", [this.bottomTime++, "bottom"]);
+        if (this.bottomTime > 1) {
+          this.bottomTime = 0;
+        }
+        this.topTime = 0;
       }
       if (scrollTop <= 0) {
         this.$emit("onScroll", [this.topTime++, "top"]);
+        if (this.topTime > 1) {
+          this.topTime = 0;
+        }
+        this.bottomTime = 0;
       }
     }
   }

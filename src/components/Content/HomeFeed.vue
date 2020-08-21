@@ -5,7 +5,6 @@
     v-touch:longtap="longtapHandler"
   >
     <post
-      class="swiper-slide"
       v-for="content in contents"
       :key="content.id"
       :content="content"
@@ -39,7 +38,7 @@ export default {
   mounted() {},
   methods: {
     swipeHandler(direction) {
-      console.log(this.readyForNext);
+      console.log(this.readyForNext, direction);
       if (
         this.readyForNext[0] > 0 &&
         this.readyForNext[1] == "bottom" &&
@@ -47,7 +46,7 @@ export default {
       ) {
         console.log("swipeHandler to bottom with", direction);
         this.curIndex =
-          this.curIndex <= this.contents.length
+          this.curIndex < this.contents.length - 1
             ? this.curIndex + 1
             : this.contents.length;
       }
