@@ -30,4 +30,4 @@ Route::group(['prefix' => 'user/{id}', 'namespace' => 'API', 'middleware' => 'au
     Route::post('detail', 'UserController@detail');
 });
 
-Route::get('get-contents', 'ContentController@getContents');
+Route::get('get-contents', 'API\ContentController@getContents');
