@@ -98,7 +98,7 @@
                 @change="handlePreviewImage"
               />
 
-              <button v-show="startCreate" class="btn-basic btn-100" @click="deleteCurObject()">
+              <button v-show="startCreate" class="btn-basic btn-100" @click="deleteCanvas()">
                 <svg class="svg-icon" viewBox="0 0 20 20">
                   <path
                     fill="none"
@@ -258,22 +258,21 @@ export default {
     ...mapActions(["createContent"]),
     initCanvas() {
       canvas = new fabric.Canvas("createCanvas");
-      canvas.selectionColor = "rgba(0,255,0,0.2)";
-      canvas.selectionBorderColor = "red";
+      canvas.selectionColor = "rgba(0,0,0,0.2)";
+      canvas.selectionBorderColor = "gray";
       canvas.selectionLineWidth = 1;
       fabric.Object.prototype.objectCaching = false;
       canvas.setDimensions({
         width: this.canvasSize[0],
         height: this.canvasSize[1]
       });
+      canvas.backgroundColor = "#222222";
       /* this.canvas.setWidth = this.$refs.defaultImage.clientWidth;
       this.canvas.setHeight = this.$refs.defaultImage.clientHeight; */
       var self = this;
 
       fabric.Image.fromURL(this.previewImage, function(oImg) {
         oImg.set({
-          left: 0,
-          top: 0,
           width: oImg.width,
           height: oImg.height,
           selectable: false,
@@ -288,6 +287,10 @@ export default {
           oImg.scaleToHeight(self.canvasSize[1]);
         }
         canvas.add(oImg);
+        // set the object to be centered to the Canvas
+        canvas.centerObject(oImg);
+        oImg.setCoords();
+        canvas.renderAll();
       });
 
       // create a rectangle with angle=45
@@ -302,7 +305,7 @@ export default {
         top: 50,
         fontFamily: "helvetica",
         angle: 0,
-        fill: "#000000",
+        fill: "#f0f0f0",
         scaleX: 1,
         scaleY: 1,
         fontWeight: "bold",
@@ -362,6 +365,10 @@ export default {
         reader.readAsDataURL(event.target.files[0]);
       }
     },
+    deleteCanvas() {
+      canvas.clear();
+      this.startCreate = false;
+    },
     createHashtag() {
       if (this.curTag !== "") {
         this.curTag = this.curTag.replace(/\s+/g, " ");
@@ -381,6 +388,7 @@ export default {
         var images = canvas.toDataURL({
           format: "jpeg"
         });
+        var self = this;
         if (this.limitTitle !== "" && this.tags.length > 0) {
           var data = {
             images: [images],
@@ -388,7 +396,9 @@ export default {
             tags: this.tags,
             cat_id: 1
           };
-          this.createContent(data);
+          this.createContent(data).then(resp => {
+            self.$router.push("/");
+          });
         }
       } catch ($e) {
         // console.log($e);

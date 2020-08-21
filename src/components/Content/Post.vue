@@ -2,7 +2,7 @@
   <div class="post row">
     <div class="post-content" style="background: #fff" @scroll="onScroll">
       <div class="post-img col-6 col-s-12">
-        <img :src="curImage" crossorigin="anonymous" />
+        <img :src="curImage" />
 
         <div class="col-6 col-s-12 slide-tool">
           <slide-react-tool></slide-react-tool>

@@ -1001,6 +1001,7 @@ label {
     top: 2em;
     right: 2em;
     width: 4em;
+    z-index: 10;
 }
 
 /* BACK BUTTON */
