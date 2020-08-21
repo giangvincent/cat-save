@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       curIndex: 0,
-      readyForNext: false
+      bottomTime: 0,
+      topTime: 0
     };
   },
   computed: {
@@ -35,36 +36,50 @@ export default {
       return this.contents[this.curIndex].id;
     }
   },
+  watch: {
+    curIndex: function() {
+      this.bottomTime = 0;
+      this.topTime = 0;
+      console.log("watch current index", this.bottomTime, this.topTime);
+      window.scrollTo(
+        {
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        },
+        200
+      );
+    }
+  },
   mounted() {},
   methods: {
     swipeHandler(direction) {
-      console.log(this.readyForNext, direction);
-      if (
-        this.readyForNext[0] > 0 &&
-        this.readyForNext[1] == "bottom" &&
-        direction == "top"
-      ) {
-        console.log("swipeHandler to bottom with", direction);
-        this.curIndex =
-          this.curIndex < this.contents.length - 1
-            ? this.curIndex + 1
-            : this.contents.length;
-      }
+      if (window.innerWidth < 768) {
+        console.log(this.bottomTime, this.topTime, direction);
+        if (this.bottomTime > 1 && direction == "top") {
+          console.log("swipeHandler : next post");
+          this.curIndex =
+            this.curIndex < this.contents.length - 1
+              ? this.curIndex + 1
+              : this.contents.length - 1;
+        }
 
-      if (
-        this.readyForNext[0] > 0 &&
-        this.readyForNext[1] == "top" &&
-        direction == "bottom"
-      ) {
-        console.log("swipeHandler to top with", direction);
-        this.curIndex = this.curIndex > 0 ? this.curIndex - 1 : 0;
+        if (this.topTime > 1 && direction == "bottom") {
+          console.log("swipeHandler : prev post");
+          this.curIndex = this.curIndex > 0 ? this.curIndex - 1 : 0;
+        }
       }
     },
     longtapHandler() {
       console.log("longtapHandler");
     },
     onScrollPost(event) {
-      this.readyForNext = event;
+      if (event == "bottom") {
+        this.bottomTime++;
+      }
+      if (event == "top") {
+        this.topTime++;
+      }
     }
   }
 };

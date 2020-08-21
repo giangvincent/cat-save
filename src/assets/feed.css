@@ -1,4 +1,7 @@
 @media only screen and (max-width: 768px) {
+    body {
+        overscroll-behavior-y: contain;
+    }
 
     .post,
     .post-img,

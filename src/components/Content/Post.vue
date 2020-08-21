@@ -66,9 +66,7 @@ export default {
   data() {
     return {
       defaultImage: "../../assets/images/default.jpg",
-      indexImage: 0,
-      bottomTime: 0,
-      topTime: 0
+      indexImage: 0
     };
   },
   computed: {
@@ -105,18 +103,10 @@ export default {
   methods: {
     onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
       if (scrollTop + clientHeight >= scrollHeight) {
-        this.$emit("onScroll", [this.bottomTime++, "bottom"]);
-        if (this.bottomTime > 1) {
-          this.bottomTime = 0;
-        }
-        this.topTime = 0;
+        this.$emit("onScroll", "bottom");
       }
       if (scrollTop <= 0) {
-        this.$emit("onScroll", [this.topTime++, "top"]);
-        if (this.topTime > 1) {
-          this.topTime = 0;
-        }
-        this.bottomTime = 0;
+        this.$emit("onScroll", "top");
       }
     }
   }
