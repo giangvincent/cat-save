@@ -50,7 +50,7 @@ export default {
                     const user = resp.data.success.user;
                     localStorage.setItem("user-token", token); // store the token in localstorage
                     localStorage.setItem("user", user);
-                    axios.defaults.headers.common["Authorization"] = token;
+                    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
                     commit("AUTH_SUCCESS", token);
                     commit("SET_USER_DETAIL", user);
                     // you have your token, now log in your user :)

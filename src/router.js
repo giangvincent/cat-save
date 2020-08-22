@@ -52,7 +52,7 @@ export default new Router({
       beforeEnter: ifAuthenticated,
     },
     {
-      path: "/user",
+      path: "/user/:id",
       name: "user",
       component: () => import("./views/User.vue"),
       beforeEnter: ifAuthenticated,

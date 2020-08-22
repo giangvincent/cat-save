@@ -4,7 +4,8 @@ import router from "./router";
 import store from "./store/";
 import axios from "axios";
 import Vue2TouchEvents from 'vue2-touch-events'
-
+import "@/assets/main.css";
+import "@/assets/feed.css";
 import "./registerServiceWorker";
 
 const token = localStorage.getItem("user-token");

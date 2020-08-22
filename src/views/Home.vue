@@ -8,6 +8,7 @@
       <feed></feed>
       <nav-right></nav-right>
     </div>
+    <float-user v-if="!$isMobile"></float-user>
     <goto-top></goto-top>
   </div>
 </template>
@@ -18,9 +19,8 @@ import NavTop from "@/components/Navigation/Top.vue";
 import NavLeft from "@/components/Navigation/Left.vue";
 import NavRight from "@/components/Navigation/Right.vue";
 import GotoTop from "@/components/Navigation/GotoTop";
+import FloatUser from "@/components/Navigation/FloatUserIcon";
 import Feed from "@/components/Content/HomeFeed.vue";
-import "@/assets/main.css";
-import "@/assets/feed.css";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -29,6 +29,7 @@ export default {
     NavTop,
     NavLeft,
     NavRight,
+    FloatUser,
     GotoTop,
     Feed
   },

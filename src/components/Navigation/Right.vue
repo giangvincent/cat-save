@@ -17,14 +17,14 @@
       </p>
     </div>
 
-    <div class="div-right">
+    <div class="div-right" v-if="token === ''">
       <h2 class="mid-title">Đăng nhập để lưu lại nội dung hữu ích vào kho lưu trữ</h2>
       <router-link to="/login">
         <button class="btn-tool btn-100 btn-basic">Đăng nhập</button>
       </router-link>
     </div>
 
-    <div class="box div-right _grey">
+    <!-- <div class="box div-right _grey">
       <h2 class="mid-title">
         <svg
           class="svg-icon"
@@ -73,6 +73,18 @@
           <p class>Clb tiếng anh 069 Đòa Noãng</p>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "right-panel",
+  computed: {
+    ...mapState({
+      token: state => state.userActions.token
+    })
+  }
+};
+</script>

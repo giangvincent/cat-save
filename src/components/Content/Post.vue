@@ -11,12 +11,12 @@
 
       <div class="col-6 col-s-12">
         <div class="avatar">
-          <img src="img/2.jpg" />
+          <img src="@/assets/images/default_avatar.jpg" />
         </div>
 
         <div class="post-tit">
           <span class="strong">
-            <router-link to="/user">@giangdam</router-link>
+            <router-link to="/user/10">@giangdam</router-link>
           </span>
           {{ curTitle }}
           <a

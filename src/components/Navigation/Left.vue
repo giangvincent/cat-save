@@ -72,22 +72,59 @@
 
     <span class="hr"></span>
 
-    <div class="login-mobile">
+    <div class="login-mobile" v-if="token === ''">
       <h2 class="mid-title">Đăng nhập để lưu lại nội dung hữu ích vào kho lưu trữ</h2>
       <router-link to="/login">
         <button class="btn-tool btn-100 btn-basic">Đăng nhập</button>
       </router-link>
     </div>
+    <div class="login-mobile" v-if="token && $isMobile">
+      <div class="g2p-cont">
+        <div class="_left">
+          <router-link :to="`/user/${user.id}`">
+            <div class="avatar">
+              <img :src="avatar" />
+            </div>
+          </router-link>
+        </div>
+        <div class="_right">
+          <p>{{ user.name }}</p>
+          <p class="sm-title">
+            <router-link :to="`/user/${user.id}`">Trang cá nhân</router-link>
+          </p>
+          <p class="sm-title">
+            <a @click="logOut">Đăng xuất</a>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState, mapActions } from "vuex";
 export default {
   name: "sidebar",
-  computed: {},
+  computed: {
+    ...mapState({
+      user: state => state.userActions.user,
+      token: state => state.userActions.token
+    }),
+    avatar: function() {
+      if (this.user.avatar !== null) {
+        return this.user.avatar;
+      }
+      return "../assets/images/default_avatar.jpg";
+    }
+  },
   methods: {
-    ...mapMutations(["TOGGLE_SIDEBAR"])
+    ...mapMutations(["TOGGLE_SIDEBAR"]),
+    ...mapActions(["AUTH_LOGOUT"]),
+    logOut() {
+      this.AUTH_LOGOUT().then(() => {
+        this.$router.push("/");
+      });
+    }
   }
 };
 </script>
