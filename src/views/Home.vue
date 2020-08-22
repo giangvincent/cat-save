@@ -21,7 +21,7 @@ import GotoTop from "@/components/Navigation/GotoTop";
 import Feed from "@/components/Content/HomeFeed.vue";
 import "@/assets/main.css";
 import "@/assets/feed.css";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "home",
@@ -36,6 +36,14 @@ export default {
     ...mapState({
       sidebar_showup: state => state.sidebar_showup
     })
+  },
+  mounted() {
+    if (!this.$isMobile) {
+      this.TOGGLE_SIDEBAR();
+    }
+  },
+  methods: {
+    ...mapMutations(["TOGGLE_SIDEBAR"])
   }
 };
 </script>
